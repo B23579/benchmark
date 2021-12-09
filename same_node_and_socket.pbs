@@ -1,0 +1,17 @@
+#!/bin/bash
+#PBS -N Benchmark 
+#PBS -q dssc
+#PBS -l mem=100mb
+#PBS -l nodes=1:ppn=2
+
+#PBS -l walltime=00:60:00
+
+
+
+module load intel
+
+cd $PBS_O_WORKDIR 
+ 
+
+mpirun -np 2 -genv I_MPI_PIN_PROCESSOR_LIST 0,2 ./IMB-MPI1 PingPong 2>/dev/null | grep -v ^# | grep -v '^$' &>result_by_core_intel.csv
+
